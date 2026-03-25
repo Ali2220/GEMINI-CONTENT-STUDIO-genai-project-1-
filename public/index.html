@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Content Studio - Free AI Content Generator</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <span class="logo-text">Gemini <span>Content Studio</span></span>
+            </div>
+            <div class="nav-right">
+                <div class="free-badge">🎉 FREE • 60 req/min</div>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="hero">
+            <h1>AI Content Generator</h1>
+            <p>Google Gemini 2.0 Flash - Roman Urdu mein content generate karo, bilkul free!</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="generate">
+                <span>📝</span> Generate Content
+            </button>
+            <button class="tab" data-tab="image">
+                <span>🖼️</span> Analyze Image
+            </button>
+            <button class="tab" data-tab="chat">
+                <span>💬</span> AI Chat
+            </button>
+        </div>
+
+        <!-- Generate Content Tab -->
+        <div id="generateTab" class="tab-content active">
+            <div class="card">
+                <div class="input-group">
+                    <label>📌 Topic / Title</label>
+                    <input type="text" id="topic" placeholder="e.g., Pakistan ki culture, AI technology, Love poetry">
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label>📄 Content Type</label>
+                        <select id="contentType">
+                            <option value="article">📖 Article</option>
+                            <option value="summary">📋 Summary</option>
+                            <option value="poem">🎭 Poem</option>
+                            <option value="ideas">💡 Creative Ideas</option>
+                            <option value="bulletPoints">📌 Bullet Points</option>
+                            <option value="tutorial">🎓 Tutorial</option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label>🎨 Creativity (Temperature)</label>
+                        <div class="slider-container">
+                            <span class="slider-label">📘</span>
+                            <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.7">
+                            <span id="tempValue" class="slider-value">0.7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label>📏 Max Length</label>
+                        <select id="maxLength">
+                            <option value="300">Short (300 tokens)</option>
+                            <option value="500" selected>Medium (500 tokens)</option>
+                            <option value="800">Long (800 tokens)</option>
+                            <option value="1200">Extra Long (1200 tokens)</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>&nbsp;</label>
+                        <button id="generateBtn" class="btn-primary">✨ Generate Content</button>
+                    </div>
+                </div>
+
+                <div class="output">
+                    <div class="output-header">
+                        <h3>📖 Generated Content</h3>
+                        <button class="btn-secondary copy-btn" data-target="generate">📋 Copy</button>
+                    </div>
+                    <div id="generateResponse" class="response">
+                        <p class="placeholder">✨ Topic likho aur Generate karo...</p>
+                    </div>
+                    <div id="generateLoading" class="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>AI content generate kar raha hai...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analyze Image Tab -->
+        <div id="imageTab" class="tab-content">
+            <div class="card">
+                <div class="input-group">
+                    <label>🖼️ Upload Image</label>
+                    <div class="file-upload">
+                        <input type="file" id="imageInput" accept="image/*" class="file-input">
+                        <div class="file-label">
+                            <span class="file-icon">📁</span>
+                            <span>Click or drag image here</span>
+                        </div>
+                    </div>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>❓ Question (Optional)</label>
+                    <textarea id="imageQuestion" placeholder="e.g., Is image mein kya hai? Colors batao, emotion detect karo, koi text hai to parho..." rows="3"></textarea>
+                </div>
+
+                <button id="analyzeBtn" class="btn-primary">🔍 Analyze Image</button>
+
+                <div class="output">
+                    <div class="output-header">
+                        <h3>📝 Analysis Result</h3>
+                        <button class="btn-secondary copy-btn" data-target="image">📋 Copy</button>
+                    </div>
+                    <div id="imageResponse" class="response">
+                        <p class="placeholder">Image upload karo aur analyze karo...</p>
+                    </div>
+                    <div id="imageLoading" class="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Image analyze ho rahi hai...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Chat Tab -->
+        <div id="chatTab" class="tab-content">
+            <div class="card">
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="message assistant">
+                            <div class="message-content">
+                                👋 Assalam-o-Alaikum! Main aapka AI assistant hun. Roman Urdu mein baat karo! 
+                                Main aapki madad kar sakta hun kisi bhi topic par.
+                            </div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <textarea id="chatInput" placeholder="Apna sawaal likho..." rows="2"></textarea>
+                        <button id="sendBtn" class="btn-primary">📤 Send</button>
+                    </div>
+                    
+                    <div id="chatLoading" class="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>AI soch raha hai...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Powered by Google Gemini API | Free for everyone | Roman Urdu Support</p>
+    </footer>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
